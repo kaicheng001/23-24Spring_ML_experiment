@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}任务描述}{1}{section.1}%
+\contentsline {section}{\numberline {2}教学要求}{1}{section.2}%
+\contentsline {section}{\numberline {3}实验要求}{1}{section.3}%
+\contentsline {subsection}{\numberline {3.1}\textbf {使用Python编程构建手动实现单隐层全连接神经网络}}{1}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}\textbf {使用PyTorch库简洁实现全连接神经网络}}{3}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}\textbf {提交要求}}{3}{subsection.3.3}%
+\contentsline {section}{\numberline {4}数据集}{3}{section.4}%
+\contentsline {section}{\numberline {5}训练与测试}{3}{section.5}%
+\contentsline {section}{\numberline {6}实验总结}{3}{section.6}%
+\contentsline {section}{附录A}{4}{section.6}%
+\contentsline {section}{附录B}{4}{lstnumber.1.34}%

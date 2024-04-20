@@ -1,0 +1,248 @@
+\documentclass[12pt]{article}
+\usepackage[UTF8]{ctex}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx} % For including figures
+\usepackage{amsmath}  % For math fonts, symbols and environments
+\usepackage{pgfgantt} % For Gantt charts
+\usepackage[hidelinks]{hyperref} % For hyperlinks
+\usepackage{enumitem} % For customizing lists
+\definecolor{blue}{HTML}{74BBC9}
+\definecolor{yellow}{HTML}{F7E967}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tocloft} % 导入tocloft包
+\usepackage{zi4}
+
+% 目录标题样式定义
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\mbox{}\par}
+
+% Monokai theme with a lighter background
+\definecolor{monokaiback}{HTML}{F7F7F7}  % Lighter background color
+\definecolor{monokaicomment}{HTML}{75715E}
+\definecolor{monokaikeyword}{HTML}{F92672}
+\definecolor{monokaistring}{HTML}{E6DB74}
+\definecolor{monokainumber}{HTML}{AE81FF}
+\definecolor{monokaioperator}{HTML}{F92672}
+\definecolor{monokaiidentifier}{HTML}{A6E22E}
+
+\lstdefinestyle{codestyle}{
+    backgroundcolor=\color{monokaiback},
+    commentstyle=\color{monokaicomment},
+    keywordstyle=\color{monokaikeyword},
+    numberstyle=\tiny\color{monokainumber},
+    stringstyle=\color{monokaistring},
+    operatorstyle=\color{monokaioperator},
+    identifierstyle=\color{monokaiidentifier},
+    basicstyle=\ttfamily\footnotesize\color{black},  % Black text for better readability
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=lines,  % adds lines at the top and bottom of the code block
+    framesep=3pt,  % frame padding
+    rulecolor=\color{monokaiback},  % frame color
+}
+
+\lstset{style=codestyle}
+
+
+
+
+\title{\textbf{ML第二次实验报告}}
+\author{58122204 谢兴}
+\date{\today}
+
+\begin{document}
+
+
+\begin{titlepage}
+    \centering
+    \vspace*{60pt}
+    \Huge\textbf{机器学习实验报告}
+
+    \vspace{100pt}
+    \Large
+    实验名称：建立全连接神经网络
+
+    \vspace{25pt}
+    学生：谢兴
+
+    \vspace{25pt}
+    学号：58122304
+
+    \vspace{25pt}
+    日期：2024/4/20
+
+    \vspace{25pt}
+    指导老师：刘胥影
+
+    \vspace{25pt}
+    助教：田秋雨
+
+
+
+\end{titlepage}
+
+
+\newpage
+\tableofcontents
+	
+
+\section{任务描述}
+通过两种方式实现全连接神经网络，并对图片分类任务行进行测试与实验。
+\begin{enumerate}
+    \item 手动实现简单的全连接神经网络
+    \item 使用Pytorch库简洁实现全连接神经网络
+\end{enumerate}
+
+Fashion-MNIST图片分类数据集包含10个类别的时装图像，训练集有60,000张图片，测试集中有10,000张图片。图片为灰度图片，高度（h）和宽度（w）均为28像素，通道数（channel）为1。10个类别分别为：t-shirt(T恤), trouser（裤子）, pullover（套衫）, dress（连衣裙）, coat（外套）， sandal（凉鞋），shirt（衬衫），sneaker（运动鞋），bag（包），ankle boot（短靴）。使用训练集数据进行训练，测试集数据进行测试。
+\section{教学要求}
+\begin{enumerate}
+    \item 掌握多层前馈神经网络及BP算法的原理与构建
+    \item 了解PyTorch库，掌握本实验涉及的相关部分
+    \item 进行参数分析实验，理解学习率等参数的影响
+\end{enumerate}
+
+\section{实验要求}
+\subsection{\textbf{使用Python编程构建手动实现单隐层全连接神经网络}}
+
+\textbf{模型架构}
+\begin{itemize}
+    \item 输入层 \( 28 \times 28 = 784 \) 个节点，输出层10个节点，隐藏层256个节点。注意，可以将这两个变量都视为超参数。通常选择2的若干次幂作为层的宽度。因为内存在硬件中的分配和寻址方式，这么做往往可以在计算上更高效。
+    \item 激活函数：ReLU函数
+    \item 损失函数：Cross entropy
+    \item 性能指标：准确率
+    \item 优化算法：实现标准BP或小批量梯度下降算法均可
+\end{itemize}
+
+\textbf{实现内容}
+\begin{enumerate}
+    \item 初始化模型参数：对于每一层都要记录一个权重矩阵和一个偏置向量。
+    \item 设置激活函数：使用ReLU函数作为激活函数，要求手动实现该函数。
+    \item 前向计算：实现该函数。注意：需要将每个二维图像转化为向量进行操作。
+    \item 设置损失函数：使用cross entropy作为损失函数。可以自己手动实现，也可以直接调用\texttt{nn.CrossEntropyLoss}函数。
+    \item 训练模型：
+    \begin{enumerate}
+        \item 实现训练函数：该训练函数将会运行多个迭代周期（由\textit{num\_epochs}指定）。在每个迭代周期结束时，利用\textit{test\_iter}访问到的测试数据集对模型进行评估。利用后面给出的Animator类来可视化训练进度。
+        \item 可以使用PyTorch内置的优化器（\texttt{torch.optim.SGD}），也可以使用自己定制的优化器。
+        \item 可以调用\texttt{torch.optim.SGD}函数进行参数更新。
+        \item 迭代周期数\textit{epoch}设置为10，学习率设置为0.1，训练模型。
+    \end{enumerate}
+    \item 设置性能函数：使用准确率\textit{accuracy}作为性能指标。实现该函数。
+    \item 模型评估：
+    \begin{enumerate}
+        \item 对测试集数据进行测试。
+        \item 进行性能评估。
+    \end{enumerate}
+    \item 参数分析实验：
+    \begin{enumerate}
+        \item 在所有其他参数保持不变的情况下，更改超参数\textit{num\_hiddens}的值，并查看此超参数的变化对结果有何影响。确定此超参数的最佳值。
+        \item 改变学习速率会如何影响结果？保持模型架构和其他超参数（包括轮数）不变，学习率设置为多少会带来最好的结果？
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{\textbf{使用PyTorch库简洁实现全连接神经网络}}
+
+手动实现一个简单的多层神经网络是很容易的。然而如果网络有很多层，从零开始实现会变得很麻烦。可以使用高级API如PyTorch库简洁实现。
+
+
+\begin{enumerate}
+    \item 请使用PyTorch库简洁实现前述的全连接神经网络，并进行模型评估。
+   \begin{enumerate}
+    \item 优化器：使用\texttt{torch.optim.SGD}
+    \item 小批量数据载入函数参见提供的代码。
+   \end{enumerate}
+    \item \textbf{参数分析实验}
+    \begin{enumerate}
+        \item 尝试添加不同数量的隐藏层（也可以修改学习率），怎么样设置效果最好？
+        \item 尝试不同的激活函数，哪个效果最好？
+        \item 尝试不同的方案来初始化权重，什么方法效果最好？
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{\textbf{提交要求}}
+其中报告内容包括以下几个部分：
+\begin{enumerate}
+    \item 手动实现单隐层全连接神经网络
+    \begin{enumerate}
+        \item 训练过程中，训练集与验证集误差随epoch变化的曲线图
+        \item 性能评估结果
+        \item 参数分析实验：包括实验设置与结果分析
+    \end{enumerate}
+    \item 使用PyTorch库简洁实现全连接神经网络
+    \begin{enumerate}
+        \item 性能评估结果
+        \item 参数分析实验：包括实验设置与结果分析
+    \end{enumerate}
+\end{enumerate}
+
+\section{数据集}
+
+\section{训练与测试}
+
+\section{实验总结}
+
+
+
+\newpage
+% 开始附录部分
+\appendix
+% 手动添加附录到目录中
+\addcontentsline{toc}{section}{附录A}
+\section*{附录A}
+% 附录内容...
+\subsection*{附录A1}
+% ... 附录内容 ...
+\begin{lstlisting}[language=Python, caption=Python example]
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import pickle
+from sklearn.preprocessing import MinMaxScaler
+from statsmodels.stats.outliers_influence import
+variance_inflation_factor
+from sklearn.decomposition import PCA
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.decomposition import PCA
+from statsmodels.stats.outliers_influence import
+variance_inflation_factor
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error
+# 读取 CSV 文件
+df = pd.read_csv('song_data.csv')
+# # 标记重复行（完全相同的行视为重复）
+# df['is_duplicate'] = df.duplicated(keep=False) # keep=False 会标记所
+有的重复项
+#
+# # 计算重复与非重复的行数
+# duplicate_distribution = df['is_duplicate'].value_counts()
+#
+# # 绘制重复行分布的条形图
+# plt.figure(figsize=(8, 6))
+# duplicate_distribution.plot(kind='bar')
+# plt.title('Distribution of Duplicate Rows')
+# plt.xticks(ticks=[0, 1], labels=['Unique Rows', 'Duplicate Rows'],
+rotation=0)
+# plt.ylabel('Count')
+# plt.xlabel('Row Type')
+# plt.show()
+\end{lstlisting}
+
+\addcontentsline{toc}{section}{附录B}
+\section*{附录B}
+% 另一个附录的内容...
+\subsection*{附录B1}
+% ... 附录内容 ...
+
+
+
+\end{document}
