@@ -1,0 +1,26 @@
+INFO:  latexindent.exe version 3.23.6, 2024-01-17, a script to indent .tex files
+       latexindent.exe lives here: D:/Texlive/texlive/2023/bin/windows/
+       Wed Apr 24 21:16:20 2024
+       Filename: d:/����/����ѧϰ/MLʵ��/MLʵ���/ʵ�鱨��/__latexindent_temp_ML2.tex
+INFO:  Processing switches:
+       -y|--yaml: YAML settings specified via command line
+       -c|--cruft: cruft directory
+INFO:  Directory for backup files and d:/����/����ѧϰ/MLʵ��/MLʵ���/ʵ�鱨��//indent.log:
+       d:/����/����ѧϰ/MLʵ��/MLʵ���/ʵ�鱨��/
+INFO:  YAML settings read: defaultSettings.yaml
+       Reading defaultSettings.yaml from D:/Texlive/texlive/2023/bin/windows/defaultSettings.yaml
+       Reading defaultSettings.yaml (2nd attempt) from D:/Texlive/texlive/2023/bin/windows/../../texmf-dist/scripts/latexindent/defaultSettings.yaml
+       and then, if necessary, D:/Texlive/texlive/2023/bin/windows/LatexIndent/defaultSettings.yaml
+INFO:  YAML reading settings
+       Home directory is C:\Users\HUAWEI
+       latexindent.pl didn't find indentconfig.yaml or .indentconfig.yaml
+       see all possible locations: https://latexindentpl.readthedocs.io/en/latest/sec-appendices.html#indentconfig-options)
+INFO:  YAML settings read: -y switch
+       YAML setting: defaultIndent:'  '
+       single-quoted string found in -y switch: '  ', substitute to   
+       Updating mainSettings with defaultIndent:   
+FATAL I couldn't find d:/×ÀÃæ/»úÆ÷Ñ§Ï°/MLÊµÑé/MLÊµÑé¶þ/ÊµÑé±¨¸æ/__latexindent_temp_ML2.tex, are you sure it exists?
+      Exiting, no indentation done.
+       --------------
+INFO:  Please direct all communication/issues to:
+        https://github.com/cmhughes/latexindent.pl
