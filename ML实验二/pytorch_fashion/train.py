@@ -8,6 +8,7 @@ from torchvision import transforms
 from d2l import torch as d2l
 from IPython import display
 import matplotlib.pyplot as plt
+from torch.autograd import Variable
 # 假设配置文件已经定义，并包含了一些基本设置
 import ML实验二.pytorch_fashion.config
 args = ML实验二.pytorch_fashion.config.args
@@ -98,6 +99,7 @@ test_data = my_dataset(mnist_test)
 
 # 创建数据加载器
 train_loader = data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True)
+test_loader = data.DataLoader(test_data, batch_size=args.batch_size, shuffle=True)
 
 # 定义分类器模型
 class Classifier(nn.Module):
@@ -115,3 +117,72 @@ class Classifier(nn.Module):
 # 实例化模型并设置到适当的设备上
 model = Classifier()
 model.to(device)
+
+error = nn.CrossEntropyLoss()
+
+optimizer = torch.optim.SGD(model.parameters(), lr=args.lr)
+print(model)
+
+
+count = 0
+# Lists for visualization of loss and accuracy 
+loss_list = []
+iteration_list = []
+accuracy_list = []
+
+# Lists for knowing classwise accuracy
+predictions_list = []
+labels_list = []
+
+for epoch in range(args.epoch):
+    for images, labels in train_loader:
+        # Transfering images and labels to GPU if available
+        images, labels = images.to(device), labels.to(device)
+    
+        train = Variable(images.view(100, 1, 28, 28))
+        labels = Variable(labels)
+        
+        # Forward pass 
+        outputs = model(train)
+        loss = error(outputs, labels)
+        
+        # Initializing a gradient as 0 so there is no mixing of gradient among the batches
+        optimizer.zero_grad()
+        
+        #Propagating the error backward
+        loss.backward()
+        
+        # Optimizing the parameters
+        optimizer.step()
+    
+        count += 1
+    
+    # Testing the model
+    
+        if not (count % 50):    # It's same as "if count % 50 == 0"
+            total = 0
+            correct = 0
+        
+            for images, labels in test_loader:
+                images, labels = images.to(device), labels.to(device)
+                labels_list.append(labels)
+            
+                test = Variable(images.view(100, 1, 28, 28))
+            
+                outputs = model(test)
+            
+                predictions = torch.max(outputs, 1)[1].to(device)
+                predictions_list.append(predictions)
+                correct += (predictions == labels).sum()
+                total += len(labels)
+            
+            accuracy = correct * 100 / total
+            loss_list.append(loss.data)
+            iteration_list.append(count)
+            accuracy_list.append(accuracy)
+        
+        if not (count % 500):
+            print("Iteration: {}, Loss: {}, Accuracy: {}%".format(count, loss.data, accuracy))
+
+
+            

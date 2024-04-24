@@ -20,7 +20,7 @@ parser.add_argument('--batch_size', type=list, default=4,help='batch size of tra
 # train
 parser.add_argument('--epochs', type=int, default=10, metavar='N',help='number of epochs to train (default: 10)')
 
-parser.add_argument('--lr', type=float, default=0.01, metavar='LR',help='learning rate (default: 0.01)')
+parser.add_argument('--lr', type=float, default=0.1, metavar='LR',help='learning rate (default: 0.01)')
 
 parser.add_argument('--momentum', type=float, default=0.99, metavar='M',help='SGD momentum (default: 0.5)')
 
