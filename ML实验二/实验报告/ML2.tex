@@ -295,7 +295,7 @@ Fashion-MNIST图片分类数据集包含10个类别的时装图像，训练集�
     loss function & Cross Entropy \\[\medskipamount]
     performance   & accuracy      \\[\medskipamount]
     batch size    & 16            \\[\medskipamount]
-    num\_hiddens  & 256            \\[\medskipamount]
+    num\_hiddens  & 256           \\[\medskipamount]
     \bottomrule
   \end{tabular}
 \end{table}
@@ -347,16 +347,16 @@ Fashion-MNIST图片分类数据集包含10个类别的时装图像，训练集�
 
         分别使用了relu和sigmoid作为激活函数，发现relu的效果更好。
   \item \textbf{使用不同的方案来初始化权重}
-         
+
         分别使用了不同的方案初始化权重，发现以下的参数初始化方法效果最好。
-  \begin{lstlisting}
+        \begin{lstlisting}
     # Initialize parameters
     nn.init.normal_(self.fc1.weight, mean=0, std=0.1)
     nn.init.constant_(self.fc1.bias, 0)
     nn.init.normal_(self.fc2.weight, mean=0, std=0.1)
     nn.init.constant_(self.fc2.bias, 0)
   \end{lstlisting}
-        
+
 \end{enumerate}
 
 
@@ -765,6 +765,51 @@ args, unknown = parser.parse_known_args()
 
 \section{predict.py}
 
+\begin{lstlisting}
+# predict.py
+import torch
+from torchvision import transforms
+from PIL import Image
 
+def load_model(model_path):
+    """
+    Load the PyTorch model from the specified path.
+    """
+    model = torch.load(model_path)
+    #model.eval()  # Set the model to evaluation mode
+    return model
+
+def predict(model, image):
+    """
+    Make a prediction for the given image using the provided model.
+    """
+    # Assuming image is a PIL image, we must transform it first.
+    transform = transforms.Compose([
+        transforms.ToTensor(),  # Convert the PIL Image to a tensor.
+        transforms.Normalize((0.5,), (0.5,))  # Normalize the image
+    ])
+    
+    # Apply the transformations and add batch dimension
+    image = transform(image).unsqueeze(0)
+    
+    # No need to track gradients for prediction
+    with torch.no_grad():
+        output = model(image)
+    
+    # Get the predicted class with the highest score
+    _, predicted_class = torch.max(output, 1)
+    return predicted_class.item()  # Return the index as a Python int
+
+# Load the model
+model = load_model('fashion_mnist.pt')
+
+# Load an image (ensure the image is in the correct format for the model)
+image = Image.open('image.png')
+
+# Make a prediction
+predicted_class = predict(model, image)
+print('Predicted class:', predicted_class)
+
+\end{lstlisting}
 
 \end{document}
