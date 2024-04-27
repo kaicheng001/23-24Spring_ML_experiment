@@ -1,0 +1,159 @@
+\documentclass[12pt]{article}
+\usepackage[UTF8]{ctex}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx} % For including figures
+\usepackage{amsmath}  % For math fonts, symbols and environments
+\usepackage{pgfgantt} % For Gantt charts
+\usepackage[hidelinks]{hyperref} % For hyperlinks
+\usepackage{enumitem} % For customizing lists
+\definecolor{blue}{HTML}{74BBC9}
+\definecolor{yellow}{HTML}{F7E967}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tocloft} % 导入tocloft包
+\usepackage{zi4}
+\usepackage{fontspec}
+
+\usepackage{graphicx} % For including graphics
+\usepackage{booktabs} % For professional looking tables
+\usepackage{array}    % For extended column definitions
+\usepackage{amsmath}  % For math environments like 'equation'
+\usepackage{amsfonts} % For math fonts like '\mathbb{}'
+\usepackage{amssymb}  % For math symbols
+\usepackage{caption}  % For custom captions
+\usepackage[table]{xcolor} % For coloring tables
+
+% Set page margins
+\usepackage[margin=1in]{geometry}
+
+% 目录标题样式定义
+\renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\mbox{}\par}
+
+% Monokai theme with a lighter background
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\setmonofont{Source Code Pro}[Contextuals={Alternate}]
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+
+
+\title{\textbf{ML第二次实验报告}}
+\author{58122204 谢兴}
+\date{\today}
+
+\begin{document}
+
+
+\begin{titlepage}
+  \centering
+  \vspace*{60pt}
+  \Huge\textbf{机器学习实验报告}
+
+  \vspace{100pt}
+  \Large
+  实验名称：建立全连接神经网络
+
+  \vspace{25pt}
+  学生：谢兴
+
+  \vspace{25pt}
+  学号：58122204
+
+  \vspace{25pt}
+  日期：2024/4/25
+
+  \vspace{25pt}
+  指导老师：刘胥影
+
+  \vspace{25pt}
+  助教：田秋雨
+
+
+
+\end{titlepage}
+
+
+\newpage
+\tableofcontents
+
+
+\section{任务描述}
+实现卷积神经网络CNN，并使用CIFAR-10数据集进行进行图片分类任务。
+
+CIFAR-10是计算机视觉领域中的一个重要的数据集 。 原始数据集分为训练集和测试集，
+其中训练集包含50000张、测试集包含300000张图像。 在测试集中，10000张图像将被用于评估，
+而剩下的290000张图像将不会被进行评估，包含它们只是为了防止手动标记测试集并提交标记结果。
+这些图片共涵盖10个类别：飞机、汽车、鸟类、猫、鹿、狗、青蛙、马、船和卡车，高度和宽度均为32像素并有三个颜色通道（RGB）。
+图1的左上角显示了数据集中飞机、汽车和鸟类的一些图像。本实验使用部分的CIFAR-10数据集，其中训练集共包含5000张png格式的图像，
+每个类别包含500张；测试集共包含5000张jpg格式的图像。
+
+
+\section{实验要求}
+
+在掌握CNN原理的基础上，使用CNN在CIFAR-10数据集上进行图片分类任务。在此实验中，要求掌握以下内容：
+
+\begin{enumerate}
+  \item 图片数据的加载和预处理，熟悉PyTorch中对数据集的处理
+  \item 使用PyTorch实现CNN网络架构
+  \item 掌握深度学习模型的训练过程，正确地进行tensor的运算
+  \item 计算损失函数和准确率，对模型性能进行评估
+  \item 调整参数设置，进行参数分析实验
+\end{enumerate}
+
+
+
+
+\section{模型架构}
+
+
+
+
+
+\section{CNN模型原理阐述}
+\section{CIFAR-10数据集的内容和数据预处理}
+
+\section{CNN模型构建}
+
+\section{实验设置}
+
+
+\section{实验结果}
+
+
+\section{参数分析实验}
+
+
+
+\newpage
+% 开始附录部分
+\appendix
+% 手动添加附录到目录中
+\addcontentsline{toc}{section}{附录}
+\section{使用Python编程构建手动实现单隐层全连接神经网络Code}
+
+
+\end{document}

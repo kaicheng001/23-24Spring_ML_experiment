@@ -1,0 +1,90 @@
+[33mcommit e2db2d4ec57e5acec98ea807cf0261bf4450107e[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 27 19:50:34 2024 +0800
+
+    commit the new asgn3 pdf
+
+[33mcommit e4be7f7ab4572bd7c2bb84125c39980830be0335[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 27 19:38:32 2024 +0800
+
+    complie the tex pdf file
+
+[33mcommit bb8fadf81a4e53071e81474353c25d47e0427380[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 27 18:07:55 2024 +0800
+
+    commit changes with pictures in cifar-10 dataset
+
+[33mcommit 58d215c4c46577a379c55827c73400dd3e4a4d8b[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 27 17:48:56 2024 +0800
+
+    commit changes including the picture dataset
+
+[33mcommit 29b7f976a8707dc05141388d810c92cd1f893ed7[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Wed Apr 24 21:19:22 2024 +0800
+
+    文件位置调整
+
+[33mcommit a03285327277f6b90eb5fd512598b6c9d9391068[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Wed Apr 24 21:11:22 2024 +0800
+
+    第二次实验最终版了，删除了pre1.py，增加了predict.py，修改了
+    pytorch_api.ipynb
+
+[33mcommit df7e47e13dfa920f0d1cfbe86ce27b8b64acedb6[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Wed Apr 24 18:58:48 2024 +0800
+
+    add predict.py 错误版本
+
+[33mcommit ae6596ee3a5fddd33a37a2cf4bdeaca758f0a38f[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Wed Apr 24 18:29:08 2024 +0800
+
+    不想写了啊啊啊
+
+[33mcommit 7bb2885ef75cefd4857102026921deec5a32d45a[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Mon Apr 22 23:45:17 2024 +0800
+
+    subject to the requirements of the experiment task
+
+[33mcommit 2f0259add4e595c82df4d18257cd089dab982e45[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 20 12:29:41 2024 +0800
+
+    pdf code in monico format
+
+[33mcommit d3d01ead145bbbf1a4e950ceb0ef31278c6b1cb1[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 20 12:17:43 2024 +0800
+
+    Xetex编译
+
+[33mcommit 1a5f9a70f44450bbbbb987efba7cda0be3afac83[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 20 11:54:20 2024 +0800
+
+    在当前项目下配置latex编译环境
+
+[33mcommit 83de885b1bfecdba0fb18d6b739bb8fd94ccbc9c[m
+Author: kaicheng001 <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 20 11:04:27 2024 +0800
+
+    Update README.md
+
+[33mcommit 2ebf9ac721cffd5baf275c97e7ece79022f6fd8c[m
+Author: kaicheng001 <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 20 11:02:59 2024 +0800
+
+    Create README.md
+
+[33mcommit 67f33df6665952ea0778a93e5e43cce1d5ec2aee[m
+Author: kaicheng <125368441+kaicheng001@users.noreply.github.com>
+Date:   Sat Apr 20 10:59:20 2024 +0800
+
+    first commit

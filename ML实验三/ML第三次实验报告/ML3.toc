@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}任务描述}{1}{section.1}%
+\contentsline {section}{\numberline {2}实验要求}{2}{section.2}%
+\contentsline {section}{\numberline {3}模型架构}{2}{section.3}%
+\contentsline {section}{\numberline {4}CNN模型原理阐述}{2}{section.4}%
+\contentsline {section}{\numberline {5}CIFAR-10数据集的内容和数据预处理}{2}{section.5}%
+\contentsline {section}{\numberline {6}CNN模型构建}{2}{section.6}%
+\contentsline {section}{\numberline {7}实验设置}{2}{section.7}%
+\contentsline {section}{\numberline {8}实验结果}{2}{section.8}%
+\contentsline {section}{\numberline {9}参数分析实验}{2}{section.9}%
+\contentsline {section}{附录}{3}{section.9}%
+\contentsline {section}{\numberline {A}使用Python编程构建手动实现单隐层全连接神经网络Code}{3}{appendix.A}%
