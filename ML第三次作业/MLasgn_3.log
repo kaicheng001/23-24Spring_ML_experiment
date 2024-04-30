@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.29)  27 APR 2024 19:38
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.29)  30 APR 2024 16:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -859,14 +859,14 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `MLasgn_3.out' has not changed.
-(rerunfilecheck)             Checksum: 5F9B4C455B33866291F8570E4F7C97E8;688.
+(rerunfilecheck)             Checksum: D8C59E63F280A3CEBB3B9D0EB5791C08;1282.
  ) 
 Here is how much of TeX's memory you used:
- 31527 strings out of 474794
- 654524 string characters out of 5758529
- 1935842 words of memory out of 5000000
- 53161 multiletter control sequences out of 15000+600000
- 628600 words of font info for 90 fonts, out of 8000000 for 9000
+ 31537 strings out of 474794
+ 654652 string characters out of 5758529
+ 1937842 words of memory out of 5000000
+ 53169 multiletter control sequences out of 15000+600000
+ 630141 words of font info for 92 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  117i,13n,121p,541b,741s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
