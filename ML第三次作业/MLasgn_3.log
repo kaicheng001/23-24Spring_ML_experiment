@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.29)  30 APR 2024 16:03
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.29)  2 MAY 2024 22:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -853,21 +853,21 @@ LaTeX Font Info:    Trying to load font information for T1+bch on input line 17.
 File: t1bch.fd 2004/10/18 font definitions for T1/bch.
 ) [1
 
-] (./MLasgn_3.aux)
+] [2] (./MLasgn_3.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `MLasgn_3.out' has not changed.
-(rerunfilecheck)             Checksum: D8C59E63F280A3CEBB3B9D0EB5791C08;1282.
+(rerunfilecheck)             Checksum: B8B9AC87210DEA6AA22612F4ACFA1BCA;1284.
  ) 
 Here is how much of TeX's memory you used:
- 31537 strings out of 474794
- 654652 string characters out of 5758529
- 1937842 words of memory out of 5000000
- 53169 multiletter control sequences out of 15000+600000
- 630141 words of font info for 92 fonts, out of 8000000 for 9000
+ 31557 strings out of 474794
+ 655019 string characters out of 5758529
+ 1938842 words of memory out of 5000000
+ 53184 multiletter control sequences out of 15000+600000
+ 639644 words of font info for 98 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 117i,13n,121p,541b,741s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 117i,13n,121p,541b,813s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on MLasgn_3.pdf (1 page).
+Output written on MLasgn_3.pdf (2 pages).
