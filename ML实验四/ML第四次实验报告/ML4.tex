@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[UTF8]{ctex}
+\usepackage{xeCJK}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx} % For including figures
 \usepackage{amsmath}  % For math fonts, symbols and environments
@@ -13,22 +14,39 @@
 \usepackage{tocloft} % 导入tocloft包
 \usepackage{zi4}
 \usepackage{fontspec}
+\usepackage{setspace} % For setting line spacing
 
-\usepackage{graphicx} % For including graphics
 \usepackage{booktabs} % For professional looking tables
 \usepackage{array}    % For extended column definitions
-\usepackage{amsmath}  % For math environments like 'equation'
 \usepackage{amsfonts} % For math fonts like '\mathbb{}'
 \usepackage{amssymb}  % For math symbols
 \usepackage{caption}  % For custom captions
 \usepackage[table]{xcolor} % For coloring tables
+\usepackage{tabularx} % For auto-sized table columns
+\usepackage{algorithm}
 
-% Set page margins
-\usepackage[margin=1in]{geometry}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
 
 % 目录标题样式定义
 \renewcommand{\cfttoctitlefont}{\hfill\Large\bfseries}
 \renewcommand{\cftaftertoctitle}{\hfill\mbox{}\par}
+
+% 设置中文主字体为宋体，指定相对路径
+\setCJKmainfont[
+    Path = ./fonts/,
+    BoldFont = SimSun.ttc,
+    ItalicFont = SimSun.ttc
+]{SimSun.ttc}
+
+% 设置英文主字体为Times New Roman
+\setmainfont{Times New Roman}
+
+% 设置正文格式：宋体，小四，行距20磅
+\renewcommand\normalsize{%
+    \CJKfamily{song}\fontsize{12pt}{20pt}\selectfont}
 
 % Monokai theme with a lighter background
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -57,7 +75,6 @@
 }
 
 \lstset{style=mystyle}
-
 
 
 
@@ -365,8 +382,8 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
 我们使用网格搜索（GridSearchCV）方法对以上参数进行了交叉验证（5折交叉验证），最终选择了最佳的参数组合。
 
 \begin{itemize}
-  \item 最佳参数：\('C': 0.001, 'degree': 2, 'gamma': 0.001, 'kernel': 'linear', 'laplacian_gamma': 0.001\)
-  \item 最佳交叉验证准确率：0.9780
+  \item \textbf{最佳参数：}\['C': 0.001, 'degree': 2, 'gamma': 0.001, 'kernel': 'linear', 'laplacian\_gamma': 0.001\]
+  \item \textbf{最佳交叉验证准确率：}0.9780
 \end{itemize}
 
 从实验结果可以看出，线性核函数的表现最佳，同时适当的小的正则化常数C（如0.001）可以提高模型的泛化能力。高斯核、Laplace核和Sigmoid核在本实验中未能显著提升性能，表明在此数据集上，线性核已经能够很好地分类数据。
@@ -376,11 +393,11 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
 
 在完成模型训练和参数选择后，我们使用最佳模型对测试数据进行了预测。具体的实验步骤和结果如下：
 
-\begin{itemize}
+\begin{enumerate}
   \item 首先，使用最佳参数配置对测试集进行了预测，得到了测试集的准确率为0.9825。
   \item 预测结果保存在 \texttt{result.csv} 文件中，文件中只包含一列数据标签分类，分别为+1或-1。
   \item 对比了测试数据中的预测值和原始标签，结果显示有2处不同。
-\end{itemize}
+\end{enumerate}
 
 % 实验结果如下图所示：
 
@@ -416,7 +433,12 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
 % 虽然整体准确率较高，但模型在某些样本上的预测仍存在错误，这表明进一步优化模型和调整参数可能会进一步提高预测性能。
 
 \section{实验总结}
+本实验我们用三种方法实现了对SVM对偶形式的求解，包括传统的QP方法、手动实现的SMO算法和使用sklearn库的软间隔SVM。
 
+通过这些实验，我们验证了手动实现的SMO算法在解决SVM对偶问题上的有效性，并展示了其在实际数据集上的应用效果。
+同时，我们还通过sklearn库实现了软间隔SVM，并进行了参数选择和分析实验，得到了最佳的参数组合。
+最终，我们对测试数据进行了预测，得到了较高的准确率。
+这些实验结果表明，SVM在二分类问题上具有较好的性能，可以有效地应用于实际问题中。
 
 \newpage
 % 开始附录部分
