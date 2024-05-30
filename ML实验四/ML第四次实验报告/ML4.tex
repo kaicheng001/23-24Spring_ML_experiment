@@ -115,11 +115,11 @@
 SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传统二次规划方法也可以用于求解对偶问题。求得最优拉格朗日乘子后，
 超平面参数$w, b$可由以下式子得到：
 \begin{equation}
-  \textbf{w}=\Sigma{i=1}{m}\alpha_{i}y_{i}x_{i}
+  \textbf{w} = \sum_{i=1}^{m} \alpha_{i}y_{i}x_{i}
 \end{equation}
 
 \begin{equation}
-  b=\frac{1}{|S|}\Sigma_{s\in S}(\frac{1}{y_{s}}-\Sigma_{s\in S}\alpha_{i}y_{i}\mathbf{x_{i}^{T}x_{s}})
+  b=\frac{1}{|S|}\sum_{s\in S}(\frac{1}{y_{s}}-\sum_{s\in S}\alpha_{i}y_{i}\mathbf{x_{i}^{T}x_{s}})
 \end{equation}
 请完成以下任务：
 \begin{enumerate}
