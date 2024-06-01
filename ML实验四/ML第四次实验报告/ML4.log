@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.29)  30 MAY 2024 19:58
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.2.29)  1 JUN 2024 11:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1110,7 +1110,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \tf@toc=\write5
 \openout5 = `ML4.toc'.
 
- [2] [3] [4] [5] [6] [7] [8]
+ [2] [3] [4] [5]
+File: figures/QP_hard_SVM_result.png Graphic file (type bmp)
+<figures/QP_hard_SVM_result.png>
+ [6] [7] [8]
 Missing character: There is no 到 (U+5230) in font Times New Roman/OT:script=latn;language=dflt;mapping=tex-text;!
 Missing character: There is no 到 (U+5230) in font Times New Roman/OT:script=latn;language=dflt;mapping=tex-text;!
 [9]
@@ -1137,27 +1140,23 @@ Package fontspec Info: Font family 'FangSong(0)' created for font 'FangSong'
 (fontspec)             <->"FangSong/OT:script=hani;language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
- [10] (d:/Texlive/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
+ [10] [11] (d:/Texlive/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/02/21 1.10 listings language file
-) [11] [12] [13] [14] [15] [16] [17] [18] [19] (./ML4.aux)
+) [12] [13] [14] [15] [16] [17] [18] [19] [20] (./ML4.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `ML4.out' has not changed.
-(rerunfilecheck)             Checksum: FEAEC34D9FFCFFAA38D0E64435257DB8;2979.
+(rerunfilecheck)             Checksum: C47BDC3A7930108C1200F5629DAE7888;3278.
  ) 
 Here is how much of TeX's memory you used:
- 32918 strings out of 474794
- 701626 string characters out of 5758529
- 2314842 words of memory out of 5000000
- 54447 multiletter control sequences out of 15000+600000
+ 32971 strings out of 474794
+ 703987 string characters out of 5758529
+ 2313842 words of memory out of 5000000
+ 54497 multiletter control sequences out of 15000+600000
  565188 words of font info for 116 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  103i,11n,117p,456b,2010s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ML4.pdf (20 pages).
+Output written on ML4.pdf (21 pages).

@@ -101,7 +101,7 @@
   学号：58122204
 
   \vspace{25pt}
-  日期：2024/5/28
+  日期：2024/6/1
 
   \vspace{25pt}
   指导老师：刘胥影
@@ -128,7 +128,7 @@
 
 
 \section{问题复述}
-\subsection{手动实现SMO算法}
+\subsection{手动实现SVM的SMO算法}
 SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传统二次规划方法也可以用于求解对偶问题。求得最优拉格朗日乘子后，
 超平面参数$w, b$可由以下式子得到：
 \begin{equation}
@@ -256,9 +256,28 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
 \section{实验过程}
 \subsection{手动实现SMO算法}
 
-\subsubsection{传统的QP方法求解SVM对偶问题}
-实验结果显示，传统QP算法并不能直接求解SVM的对偶问题。这是因为SVM的对偶问题是一个二次规划问题，需要满足一定的条件才能使用QP算法进行求解。
-具体来说，SVM的对偶问题需要满足以下条件：
+\subsubsection{传统QP算法求解硬间隔SVM的对偶问题}
+在本实验中，我们首先使用传统的二次规划（QP）方法求解硬间隔SVM的对偶问题。代码实现的大致思路如下：
+
+具体的实验步骤和结果如下：
+
+\begin{enumerate}
+  \item 加载训练数据并求解硬间隔SVM：从CSV文件加载训练数据，调用上述函数求解SVM问题，得到模型参数（权重w和偏置b）。
+  \item 定义预测函数：根据训练好的模型参数，对测试数据进行预测。
+\end{enumerate}
+
+实验结果如下图~\ref{QP Algorithm for Support Vector Machine} 所示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/QP_hard_SVM_result.png}
+  \caption{QP Algorithm for Support Vector Machine}
+  \label{QP Algorithm for Support Vector Machine}
+\end{figure}
+
+从实验结果可以看出，硬间隔SVM的训练准确率达到了100\%，模型能够完美地分类训练数据。在对测试数据进行预测时，模型的准确率也达到了91\%。
+
+
 
 \subsubsection{手动实现SMO算法 求解SVM对偶问题}
 
@@ -303,14 +322,21 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
     \toprule
     样本索引 & 原始标签 & 预测标签 \\
     \midrule
-    20 & 1 & -1 \\
-    77 & 1 & -1 \\
+    20   & 1    & -1   \\
+    77   & 1    & -1   \\
     \bottomrule
   \end{tabular}
   \caption{原始标签与预测标签的不同之处}
 \end{table}
 
 通过这些实验，我们验证了手动实现的SMO算法在解决SVM对偶问题上的有效性，并展示了其在实际数据集上的应用效果。
+
+
+\subsubsection{QP算法和SMO算法的对比}
+从实验结果和上述分析可以看出手动实现的SMO算法要比传统的QP算法更加高效，尤其是在大规模数据集上。
+SMO算法通过选择两个变量来优化目标函数，而QP算法需要求解整个拉格朗日乘子向量，
+因此在大规模数据集上，SMO算法的计算效率更高。
+此外，SMO算法还可以更好地处理非线性核函数，因此在实际应用中更加灵活。
 
 
 \subsection{使用sklearn库简洁实现软间隔SVM}
@@ -446,64 +472,71 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
 % 手动添加附录到目录中
 \addcontentsline{toc}{section}{附录}
 \section{手动实现SVM的SMO算法}
-\subsection{传统QP算法}
+\subsection{传统QP算法求解硬间隔SVM的对偶问题}
 \begin{lstlisting}[language=Python]
   import numpy as np
   import pandas as pd
   from cvxopt import matrix, solvers
   
-  def kernel(x1, x2):
-      return np.dot(x1, x2.T)
+  # 读取数据
+  X_train = pd.read_csv('breast_cancer_Xtrain.csv').values
+  Y_train = pd.read_csv('breast_cancer_Ytrain.csv').values
+  X_test = pd.read_csv('breast_cancer_Xtest.csv').values
+  Y_test = pd.read_csv('breast_cancer_Ytest.csv').values
   
-  def svm_qp(X, y):
-      m, n = X.shape
-      y = y.astype(float)
-      
-      # 创建QP问题的P, q, G, h, A, b矩阵
-      K = np.dot(X, X.T) * np.outer(y, y)
-      P = matrix(K)
-      q = matrix(-np.ones((m, 1)))
-      G = matrix(-np.eye(m))
-      h = matrix(np.zeros(m))
-      A = matrix(y.reshape(1, -1).astype(float))
-      b = matrix(np.zeros(1))
+  # 将Y_train和Y_test转换为适当的格式（即-1和1）
+  Y_train = Y_train.reshape(-1)
+  Y_test = Y_test.reshape(-1)
+  Y_train[Y_train == 0] = -1
+  Y_test[Y_test == 0] = -1
   
-      # 求解QP问题
-      sol = solvers.qp(P, q, G, h, A, b)
-      alphas = np.array(sol['x']).flatten()
-      
-      # 计算权重向量w
-      w = np.sum(alphas * y[:, None] * X, axis=0)
-      
-      # 计算偏置b
-      support_vectors = (alphas > 1e-5)
-      b = np.mean(y[support_vectors] - np.dot(X[support_vectors], w))
-      
-      return w, b, alphas
+  # 定义核函数（线性核）
+  def linear_kernel(x1, x2):
+      return np.dot(x1, x2)
   
-  # 加载数据
-  X_train = np.loadtxt('breast_cancer_Xtrain.csv', delimiter=',')
-  y_train = np.loadtxt('breast_cancer_Ytrain.csv', delimiter=',')
+  # 构建二次规划问题
+  m, n = X_train.shape
+  K = np.zeros((m, m))
+  for i in range(m):
+      for j in range(m):
+          K[i, j] = linear_kernel(X_train[i], X_train[j])
   
-  # 使用训练数据集进行QP求解
-  w, b, alphas = svm_qp(X_train, y_train)
-  print("Weights:", w)
-  print("Bias:", b)
+  P = matrix(np.outer(Y_train, Y_train) * K)
+  q = matrix(-np.ones(m))
+  G = matrix(np.vstack((-np.eye(m), np.eye(m))))
+  h = matrix(np.hstack((np.zeros(m), np.ones(m) * 1e6)))
+  A = matrix(Y_train, (1, m), 'd')
+  b = matrix(0.0)
   
-  def predict(X, w, b):
+  # 求解二次规划问题
+  sol = solvers.qp(P, q, G, h, A, b)
+  alphas = np.array(sol['x']).flatten()
+  
+  # 计算权重向量和偏置
+  w = np.sum(alphas[:, np.newaxis] * Y_train[:, np.newaxis] * X_train, axis=0)
+  # 选择支持向量
+  sv = (alphas > 1e-5)
+  # 计算偏置
+  b = np.mean(Y_train[sv] - np.dot(X_train[sv], w))
+  
+  # 打印计算出的权重向量和偏置
+  print("权重向量 w：", w)
+  print("偏置 b：", b)
+  
+  # 定义预测函数
+  def predict(X):
       return np.sign(np.dot(X, w) + b)
   
-  # 加载测试数据
-  X_test = np.loadtxt('breast_cancer_Xtest.csv', delimiter=',')
-  y_test = np.loadtxt('breast_cancer_Ytest.csv', delimiter=',')
+  # 预测并评估模型
+  Y_train_pred = predict(X_train)
+  Y_test_pred = predict(X_test)
   
-  # 对测试集进行预测
-  predictions = predict(X_test, w, b)
+  train_accuracy = np.mean(Y_train_pred == Y_train)
+  test_accuracy = np.mean(Y_test_pred == Y_test)
   
-  # 计算准确率
-  accuracy = np.mean(predictions == y_test)
-  print("Accuracy on test data:", accuracy)
-    
+  print(f"Train Accuracy: {train_accuracy * 100:.2f}%")
+  print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
+  
 \end{lstlisting}
 
 \subsection{手动实现SMO}
