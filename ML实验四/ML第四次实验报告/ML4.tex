@@ -101,7 +101,7 @@
   学号：58122204
 
   \vspace{25pt}
-  日期：2024/6/1
+  日期：2024/6/6
 
   \vspace{25pt}
   指导老师：刘胥影
@@ -275,8 +275,21 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
   \label{QP Algorithm for Support Vector Machine}
 \end{figure}
 
-从实验结果可以看出，硬间隔SVM的训练准确率达到了100\%，模型能够完美地分类训练数据。在对测试数据进行预测时，模型的准确率也达到了91\%。
+分类可视化结果如图~\ref{QP_train} 和~\ref{QP_test} 所示。
+从实验结果可以看出，硬间隔SVM的训练准确率达到了100\%，模型能够完美地分类训练数据。在对测试数据进行预测时，模型的准确率也达到了91.15\%。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/QP_train.png}
+  \caption{Training Set Classification Results(QP)}
+  \label{QP_train}
+\end{figure}
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/QP_test.png}
+  \caption{Test Set Classification Results(QP)}
+  \label{QP_test}
+\end{figure}
 
 
 \subsubsection{手动实现SMO算法 求解SVM对偶问题}
@@ -314,6 +327,21 @@ SVM的对偶问题实际是一个二次规划问题，除了SMO算法外，传�
 %   \caption{原始标签与预测标签的对比}
 % \end{figure}
 
+分类可视化结果如图~\ref{SMO_train} 和~\ref{SMO_test} 所示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/SMO_train.png}
+  \caption{Training Set Classification Results(SMO)}
+  \label{SMO_train}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/SMO_test.png}
+  \caption{Test Set Classification Results(SMO)}
+  \label{SMO_test}
+\end{figure}
 测试集准确率达到了98.25\%。在对比测试数据中的预测值和原始标签时，我们发现有2处不同。具体不同之处如下表所示：
 
 \begin{table}[h]
@@ -440,7 +468,25 @@ SMO算法通过选择两个变量来优化目标函数，而QP算法需要求解
 % \end{figure}
 
 % 如上图所示，
-测试集准确率达到了98.25\%。在对比测试数据中的预测值和原始标签时，我们发现有2处不同。具体不同之处如下表所示：
+best model的测试集准确率达到了98.25\%。
+分类可视化结果如图~\ref{sklearn_train} 和~\ref{sklearn_test} 所示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/sklearn_train.png}
+  \caption{Training Set Classification Results(sklearn)}
+  \label{sklearn_train}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/sklearn_test.png}
+  \caption{Test Set Classification Results(sklearn)}
+  \label{sklearn_test}
+\end{figure}
+
+
+在对比测试数据中的预测值和原始标签时，我们发现有2处不同。具体不同之处如下表所示：
 
 \begin{table}[h]
   \centering
@@ -476,6 +522,7 @@ SMO算法通过选择两个变量来优化目标函数，而QP算法需要求解
 \begin{lstlisting}[language=Python]
   import numpy as np
   import pandas as pd
+  import matplotlib.pyplot as plt
   from cvxopt import matrix, solvers
   
   # 读取数据
@@ -487,8 +534,6 @@ SMO算法通过选择两个变量来优化目标函数，而QP算法需要求解
   # 将Y_train和Y_test转换为适当的格式（即-1和1）
   Y_train = Y_train.reshape(-1)
   Y_test = Y_test.reshape(-1)
-  Y_train[Y_train == 0] = -1
-  Y_test[Y_test == 0] = -1
   
   # 定义核函数（线性核）
   def linear_kernel(x1, x2):
@@ -537,15 +582,34 @@ SMO算法通过选择两个变量来优化目标函数，而QP算法需要求解
   print(f"Train Accuracy: {train_accuracy * 100:.2f}%")
   print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
   
+  # 可视化训练集和测试集分类结果
+  def plot_classification_results(X, Y_true, Y_pred, title):
+      plt.figure(figsize=(10, 6))
+      plt.scatter(X[Y_true == 1][:, 0], X[Y_true == 1][:, 1], color='blue', label='Positive Class')
+      plt.scatter(X[Y_true == -1][:, 0], X[Y_true == -1][:, 1], color='red', label='Negative Class')
+      plt.scatter(X[Y_true != Y_pred][:, 0], X[Y_true != Y_pred][:, 1], color='yellow', edgecolor='black', label='Misclassified')
+      plt.title(title)
+      plt.xlabel('Feature 1')
+      plt.ylabel('Feature 2')
+      plt.legend()
+      plt.show()
+  
+  plot_classification_results(X_train[:, :2], Y_train, Y_train_pred, 'Training Set Classification(QP)')
+  plot_classification_results(X_test[:, :2], Y_test, Y_test_pred, 'Test Set Classification(QP)')  
+  
 \end{lstlisting}
 
 \subsection{手动实现SMO}
 \begin{lstlisting}[language=Python]
   import numpy as np
-
+  import pandas as pd
+  import matplotlib.pyplot as plt
+  
+  # 定义核函数（线性核）
   def kernel(x1, x2):
       return np.dot(x1, x2.T)
   
+  # 计算偏置b
   def calculate_b(X, y, alphas, b, C, tol):
       m = len(y)
       b_new = 0
@@ -566,6 +630,7 @@ SMO算法通过选择两个变量来优化目标函数，而QP算法需要求解
   
       return b_new
   
+  # SMO算法
   def smo_svm(X, y, C, tol, max_passes):
       m, n = X.shape
       alphas = np.zeros(m)
@@ -623,72 +688,77 @@ SMO算法通过选择两个变量来优化目标函数，而QP算法需要求解
   
       return alphas, b
   
-  # Load the data
+  # 加载数据
   X_train = np.loadtxt('breast_cancer_Xtrain.csv', delimiter=',')
   y_train = np.loadtxt('breast_cancer_Ytrain.csv', delimiter=',')
   
+  
+  # 训练参数
   C = 1.0
   tol = 1e-3
   max_passes = 5
   
+  # 训练模型
   alphas, b = smo_svm(X_train, y_train, C, tol, max_passes)
   print("Alphas:", alphas)
   print("b:", b)
-
   
+  # 预测函数
   def predict(X, alphas, b, X_train, y_train):
-  return np.sign(np.dot((alphas * y_train).T, kernel(X_train, X)) + b)
-
-# Load test data
-X_test = np.loadtxt('breast_cancer_Xtest.csv', delimiter=',')
-y_test = np.loadtxt('breast_cancer_Ytest.csv', delimiter=',')
-
-predictions = predict(X_test, alphas, b, X_train, y_train)
-
-accuracy = np.mean(predictions == y_test)
-print("Accuracy on test data:", accuracy)
-
-
-
-# 预测函数
-def predict(X, alphas, b, X_train, y_train):
-    return np.sign(np.dot((alphas * y_train).T, kernel(X_train, X)) + b)
-
-# 加载测试数据
-X_test = np.loadtxt('breast_cancer_Xtest.csv', delimiter=',')
-y_test = np.loadtxt('breast_cancer_Ytest.csv', delimiter=',')
-y_test[y_test == 0] = -1  # 转换标签为 -1 和 1
-
-# 对测试集进行预测
-predictions = predict(X_test, alphas, b, X_train, y_train)
-
-# 计算准确率
-accuracy = np.mean(predictions == y_test)
-print("Accuracy on test data:", accuracy)
-
-# 将预测结果写入 result.csv 文件
-np.savetxt('result.csv', predictions, delimiter=',', fmt='%d')
-
-# 加载原始标签和预测标签
-original_labels = y_test
-predicted_labels = predictions
-
-# 创建 DataFrame 来存储比较结果
-comparison_df = pd.DataFrame({
-    'Original': original_labels,
-    'Predicted': predicted_labels
-})
-
-# 找出不同的标签
-differences = comparison_df[comparison_df['Original'] != comparison_df['Predicted']]
-
-# 输出不同标签的行数
-print(f"Number of differences: {len(differences)}")
-
-# 输出所有不同的标签
-print("Differences between original and predicted labels:")
-print(differences)
-
+      return np.sign(np.dot((alphas * y_train).T, kernel(X_train, X)) + b)
+  
+  # 加载测试数据
+  X_test = np.loadtxt('breast_cancer_Xtest.csv', delimiter=',')
+  y_test = np.loadtxt('breast_cancer_Ytest.csv', delimiter=',')
+  
+  # 将y_test转换为适当的格式（即-1和1）
+  y_test[y_test == 0] = -1
+  
+  # 对测试集进行预测
+  predictions = predict(X_test, alphas, b, X_train, y_train)
+  
+  # 计算准确率
+  accuracy = np.mean(predictions == y_test)
+  print("Accuracy on test data:", accuracy)
+  
+  # 将预测结果写入 result.csv 文件
+  np.savetxt('result.csv', predictions, delimiter=',', fmt='%d')
+  
+  # 加载原始标签和预测标签
+  original_labels = y_test
+  predicted_labels = predictions
+  
+  # 创建 DataFrame 来存储比较结果
+  comparison_df = pd.DataFrame({
+      'Original': original_labels,
+      'Predicted': predicted_labels
+  })
+  
+  # 找出不同的标签
+  differences = comparison_df[comparison_df['Original'] != comparison_df['Predicted']]
+  
+  # 输出不同标签的行数
+  print(f"Number of differences: {len(differences)}")
+  
+  # 输出所有不同的标签
+  print("Differences between original and predicted labels:")
+  print(differences)
+  
+  # 可视化训练集和测试集分类结果
+  def plot_classification_results(X, y_true, y_pred, title):
+      plt.figure(figsize=(10, 6))
+      plt.scatter(X[y_true == 1][:, 0], X[y_true == 1][:, 1], color='blue', label='Positive Class (Original)')
+      plt.scatter(X[y_true == -1][:, 0], X[y_true == -1][:, 1], color='red', label='Negative Class (Original)')
+      plt.scatter(X[y_true != y_pred][:, 0], X[y_true != y_pred][:, 1], color='yellow', edgecolor='black', label='Misclassified')
+  
+      plt.title(title)
+      plt.xlabel('Feature 1')
+      plt.ylabel('Feature 2')
+      plt.legend()
+      plt.show()
+  
+  plot_classification_results(X_train[:, :2], y_train, predict(X_train, alphas, b, X_train, y_train), 'Training Set Classification Results(SMO)')
+  plot_classification_results(X_test[:, :2], y_test, predictions, 'Test Set Classification Results(SMO)')  
 
 \end{lstlisting}
 
@@ -700,7 +770,9 @@ print(differences)
   from sklearn.svm import SVC
   from sklearn.metrics import accuracy_score
   from sklearn.model_selection import GridSearchCV
+  import matplotlib.pyplot as plt
   
+  # 加载数据
   X_train = pd.read_csv('breast_cancer_Xtrain.csv', header=None)
   X_test = pd.read_csv('breast_cancer_Xtest.csv', header=None)
   y_train = pd.read_csv('breast_cancer_Ytrain.csv', header=None)
@@ -709,7 +781,7 @@ print(differences)
   y_train = y_train.values.ravel()
   y_test = y_test.values.ravel()
   
-  #2、实现四个示例性的SVM模型
+  # 2. 实现四个示例性的SVM模型
   # 定义和训练SVM模型
   models = {
       "Linear SVM (C=1)": SVC(kernel='linear', C=1),
@@ -724,7 +796,6 @@ print(differences)
       y_pred = model.predict(X_test)
       accuracy = accuracy_score(y_test, y_pred)
       print(f"{name} Accuracy: {accuracy:.4f}")
-  
   
   # 3. 定义拉普拉斯核函数
   def laplacian_kernel(X, Y, gamma):
@@ -757,8 +828,6 @@ print(differences)
       def predict(self, X):
           X = check_array(X)
           return self.svc.predict(X)
-      
-  
   
   # 5. 设置参数网格并进行网格搜索
   param_grid = {
@@ -793,15 +862,13 @@ print(differences)
   # 将预测结果转换为 DataFrame
   result_df = pd.DataFrame(y_pred_all)
   
-  # 将结果保存到 result.csv 文件中，没有表头，只有一列数据标签分类
-  result_df.to_csv('result.csv', index=False, header=False)
+  # 将结果保存到 result2.csv 文件中，没有表头，只有一列数据标签分类
+  result_df.to_csv('result2.csv', index=False, header=False)
   
-  # 8、找出不同的标签
-  import pandas as pd
-  
+  # 8. 找出不同的标签
   # 加载原始标签和预测标签
   original_labels = pd.read_csv('breast_cancer_Ytest.csv', header=None).values.ravel()
-  predicted_labels = pd.read_csv('result.csv', header=None).values.ravel()
+  predicted_labels = pd.read_csv('result2.csv', header=None).values.ravel()
   
   # 创建 DataFrame 来存储比较结果
   comparison_df = pd.DataFrame({
@@ -817,7 +884,29 @@ print(differences)
   
   # 输出所有不同的标签
   print("Differences between original and predicted labels:")
-  print(differences)  
+  print(differences)
+  
+  # 可视化分类效果
+  def plot_classification_results(X, y_true, y_pred, title):
+      plt.figure(figsize=(10, 6))
+      
+      # 正类样本
+      plt.scatter(X[y_true == 1][:, 0], X[y_true == 1][:, 1], color='blue', label='Positive Class (Original)')
+      
+      # 负类样本
+      plt.scatter(X[y_true == 0][:, 0], X[y_true == 0][:, 1], color='red', label='Negative Class (Original)')
+      
+      # 误分类样本
+      plt.scatter(X[y_true != y_pred][:, 0], X[y_true != y_pred][:, 1], color='yellow', edgecolor='black', label='Misclassified')
+  
+      plt.title(title)
+      plt.xlabel('Feature 1')
+      plt.ylabel('Feature 2')
+      plt.legend()
+      plt.show()
+  
+  plot_classification_results(X_train.values[:, :2], y_train, best_model.predict(X_train.values), 'Training Set Classification Results(sklearn)')
+  plot_classification_results(X_test.values[:, :2], y_test, y_pred_all, 'Test Set Classification Results(sklearn)')   
   
 \end{lstlisting}
 
